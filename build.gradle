@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'application'  // Apply the application plugin
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.sparkjava:spark-core:2.9.3'  // Spark core dependency
+    implementation 'com.sparkjava:spark-template-handlebars:2.7.1'  // Handlebars template engine
+    implementation 'com.github.jknack:handlebars:4.2.0'  // Handlebars library
+    implementation 'org.apache.commons:commons-lang3:3.12.0'  // Apache Commons Lang3
+
+    // SLF4J for logging
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'ch.qos.logback:logback-classic:1.2.6'
+
+    // JUnit for testing
+    testImplementation 'junit:junit:4.11'
+}
+
+// Define the main class for the application plugin
+mainClassName = 'com.teamtreehouse.blog.Main'  // This should be the fully qualified class name of your Main class
+
+
+
+
+

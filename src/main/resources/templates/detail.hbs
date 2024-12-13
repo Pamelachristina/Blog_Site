@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{{title}}</title>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700|Noto+Sans:700,400" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="site-header">
+            <a class="logo" href="/">SparkBlog</a>
+            <a class="new-entry button button-round" href="/admin"><i class="material-icons">create</i></a>
+        </div>
+    </div>
+</header>
+<section>
+    <div class="container">
+        <div class="entry-list single">
+            <article>
+                <h1>{{title}}</h1>
+                <time datetime="{{createdAt}}">{{createdAt}}</time>
+                <div class="entry">
+                    <p>{{body}}</p>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+<section class="entry-comments">
+    <div class="container">
+        <h2>Comments</h2>
+        {{#if comments}}
+            {{#each comments}}
+                <div class="comment">
+                    <strong>{{name}}</strong>
+                    <time datetime="{{createdAt}}">{{createdAt}}</time>
+                    <p>{{body}}</p>
+                </div>
+            {{/each}}
+        {{else}}
+            <p>No comments yet.</p>
+        {{/if}}
+
+        <div class="new-comment">
+            <form method="POST" action="/entry/{{slug}}/comment">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name"><br>
+                <label for="comment">Comment</label>
+                <textarea rows="5" name="comment" id="comment"></textarea>
+                <input type="submit" value="Post Comment" class="button">
+            </form>
+        </div>
+    </div>
+</section>
+<footer>
+    <div>
+        <a href="#">Contact Us</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+        <a href="#">Terms</a>
+    </div>
+</footer>
+</body>
+</html>
