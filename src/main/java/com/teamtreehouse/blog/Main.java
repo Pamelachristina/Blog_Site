@@ -28,7 +28,7 @@ public class Main {
         // Route for handling password authentication
         post("/password", (req, res) -> {
             String enteredPassword = req.queryParams("password");
-            String correctPassword = "yourSecretPassword";
+            String correctPassword = "mySecretPassword";
 
             // Debugging: print the entered password to check it's being sent
             System.out.println("Entered Password: " + enteredPassword);
