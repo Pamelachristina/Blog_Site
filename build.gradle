@@ -13,18 +13,29 @@ dependencies {
     implementation 'com.github.jknack:handlebars:4.2.0'  // Handlebars library
     implementation 'org.apache.commons:commons-lang3:3.12.0'  // Apache Commons Lang3
 
-    // SLF4J for logging
-    implementation 'org.slf4j:slf4j-api:1.7.32'
-    implementation 'ch.qos.logback:logback-classic:1.2.6'
 
-    // JUnit for testing
-    testImplementation 'junit:junit:4.11'
-}
+    // SLF4J API
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+
+    // Log4j2 (Core + SLF4J Binding)
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.20.0'
+
+    // Exclude other SLF4J bindings (if necessary)
+    configurations.all {
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+
+
+        // JUnit for testing
+        testImplementation 'junit:junit:4.11'
+
 
 // Define the main class for the application plugin
-mainClassName = 'com.teamtreehouse.blog.Main'  // This should be the fully qualified class name of your Main class
+        mainClassName = 'com.teamtreehouse.blog.Main'
+        // This should be the fully qualified class name of your Main class
 
 
-
-
-
+    }
+}
