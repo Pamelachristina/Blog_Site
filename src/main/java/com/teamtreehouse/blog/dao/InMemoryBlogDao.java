@@ -14,7 +14,7 @@ public class InMemoryBlogDao implements BlogDao {
         blogEntries.add(new BlogEntry("The best day I’ve ever had", "This is my story about the best day ever.", "October 1, 2024 at 1:00"));
         blogEntries.add(new BlogEntry("The absolute worst day I’ve ever had", "This is my story about the worst day ever.", "October 1, 2024 at 1:00"));
         blogEntries.add(new BlogEntry("That time at the mall", "Let me tell you about this interesting time at the mall.", "October 1, 2024 at 1:00"));
-        blogEntries.add(new BlogEntry("Dude, where’s my car?", "I lost my car at the mall. Here's what happened.", "October 1, 2024 at 1:00"));
+        blogEntries.add(new BlogEntry("Dude, where’s my car", "I lost my car at the mall. Here's what happened.", "October 1, 2024 at 1:00"));
 
         // Generate slugs for the entries
         for (BlogEntry entry : blogEntries) {

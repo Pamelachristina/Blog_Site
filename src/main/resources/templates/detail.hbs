@@ -1,62 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{{title}}</title>
-    <link href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400italic,700|Noto+Sans:700,400" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>{{title}} - SparkBlog</title>
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/site.css">
 </head>
 <body>
 <header>
     <div class="container">
-        <div class="site-header">
-            <a class="logo" href="/">SparkBlog</a>
-            <a class="new-entry button button-round" href="/admin"><i class="material-icons">create</i></a>
-        </div>
+        <a class="logo" href="/">SparkBlog</a>
     </div>
 </header>
+
+<!-- Blog Title Wrapper -->
+<div class="container title-wrapper">
+    <h1>{{title}}</h1>
+</div>
+
 <section>
     <div class="container">
-        <div class="entry-list single">
-            <article>
-                <h1>{{title}}</h1>
-                <time datetime="{{createdAt}}">{{createdAt}}</time>
-                <div class="entry">
-                    <p>{{body}}</p>
-                </div>
-            </article>
-        </div>
-    </div>
-</section>
-<section class="entry-comments">
-    <div class="container">
-        <h2>Comments</h2>
-        {{#if comments}}
-            {{#each comments}}
-                <div class="comment">
-                    <strong>{{name}}</strong>
-                    <time datetime="{{createdAt}}">{{createdAt}}</time>
-                    <p>{{body}}</p>
-                </div>
-            {{/each}}
-        {{else}}
-            <p>No comments yet.</p>
-        {{/if}}
+        <article>
+            <time datetime="{{createdAt}}">{{createdAt}}</time>
+            <p>{{body}}</p>
+        </article>
 
-        <div class="new-comment">
-            <form method="POST" action="/entry/{{slug}}/comment">
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name"><br>
-                <label for="comment">Comment</label>
-                <textarea rows="5" name="comment" id="comment"></textarea>
-                <input type="submit" value="Post Comment" class="button">
+        <!-- Comments Section -->
+        <div class="comments">
+            <h2>Comments</h2>
+            {{#if comments}}
+                <ul>
+                    {{#each comments}}
+                        <li>
+                            <strong>{{name}}</strong>: {{body}}
+                        </li>
+                    {{/each}}
+                </ul>
+            {{else}}
+                <p>No comments yet. Be the first to comment!</p>
+            {{/if}}
+
+            <!-- Comment Form -->
+            <h3>Leave a Comment</h3>
+            <form action="/entry/{{slug}}/comment" method="post">
+                <label for="name">Your Name:</label><br>
+                <input type="text" id="name" name="name" required><br>
+
+                <label for="body">Your Comment:</label><br>
+                <textarea id="body" name="body" rows="4" cols="50" required></textarea><br>
+
+                <input type="submit" value="Submit Comment" class="button">
             </form>
         </div>
     </div>
 </section>
+
 <footer>
     <div>
         <a href="#">Contact Us</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
@@ -65,3 +64,4 @@
 </footer>
 </body>
 </html>
+
