@@ -19,7 +19,7 @@ public class Main {
         // Set up Handlebars template engine
         HandlebarsTemplateEngine engine = new HandlebarsTemplateEngine();
 
-        staticFileLocation("/public");
+        staticFileLocation("/css");
 
         // Route for displaying the password page
         get("/password", (req, res) -> {
@@ -129,15 +129,32 @@ public class Main {
             BlogEntry entry = blogDao.findEntryBySlug(slug);
 
             if (entry != null) {
-                entry.setTitle(req.queryParams("title"));
-                entry.setBody(req.queryParams("body"));
-                res.redirect("/entry/" + slug);
+                // Update the blog entry with the new data
+                String updatedTitle = req.queryParams("title");
+                String updatedBody = req.queryParams("body");
+
+                // Recalculate the slug based on the updated title
+                String newSlug = updatedTitle.toLowerCase()
+                        .replaceAll("[^a-z0-9\\s]", "") // Remove special characters
+                        .replaceAll("\\s+", "-");      // Replace spaces with hyphens
+
+                // Update the entry
+                entry.setTitle(updatedTitle);
+                entry.setBody(updatedBody);
+                entry.setSlug(newSlug);
+
+                // Redirect to the detail page with the new slug
+                res.redirect("/entry/" + newSlug);
+                return null;
             } else {
                 res.status(404);
-                return "Blog entry not found!";
+                Map<String, Object> errorModel = new HashMap<>();
+                errorModel.put("errorMessage", "Blog entry not found!");
+                return new ModelAndView(errorModel, "error.hbs");
             }
-            return null;
         });
+
+
 
         // Route to display a blog entry's details
         get("/entry/:slug", (req, res) -> {
@@ -183,21 +200,35 @@ public class Main {
             String slug = req.params(":slug");
             BlogEntry entry = blogDao.findEntryBySlug(slug);
 
-            if (entry != null) {
-                // Retrieve form inputs
-                String name = req.queryParams("name");
-                String body = req.queryParams("body");
-
-                // Validate input
-                if (name != null && !name.trim().isEmpty() && body != null && !body.trim().isEmpty()) {
-                    Comment comment = new Comment(name, body); // Use name and body fields
-                    entry.addComment(comment);
-                }
-                res.redirect("/entry/" + slug); // Redirect back to the entry detail page
-            } else {
+            if (entry == null) {
                 res.status(404);
-                return "Blog entry not found!";
+                Map<String, Object> errorModel = new HashMap<>();
+                errorModel.put("errorMessage", "Blog entry not found!");
+                return new ModelAndView(errorModel, "error.hbs");
             }
+
+            // Retrieve form inputs
+            String name = req.queryParams("name");
+            String body = req.queryParams("body");
+
+            // Validate input
+            if (name == null || name.trim().isEmpty() || body == null || body.trim().isEmpty()) {
+                Map<String, Object> errorModel = new HashMap<>();
+                errorModel.put("errorMessage", "Name and Comment body are required.");
+                errorModel.put("slug", slug);
+                errorModel.put("title", entry.getTitle());
+                errorModel.put("body", entry.getBody());
+                errorModel.put("createdAt", entry.getCreatedAt());
+                errorModel.put("comments", entry.getComments());
+                return new ModelAndView(errorModel, "detail.hbs");
+            }
+
+            // Add the comment
+            Comment comment = new Comment(name, body);
+            entry.addComment(comment);
+
+            // Redirect back to the blog entry detail page
+            res.redirect("/entry/" + slug);
             return null;
         });
 

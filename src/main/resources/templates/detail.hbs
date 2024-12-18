@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{{title}} - SparkBlog</title>
-    <link rel="stylesheet" href="/css/normalize.css">
-    <link rel="stylesheet" href="/css/site.css">
+    <link rel="stylesheet" href="/normalize.css">
+    <link rel="stylesheet" href="/site.css">
 </head>
 <body>
 <header>
@@ -13,18 +13,19 @@
         <a class="logo" href="/">SparkBlog</a>
     </div>
 </header>
-
-<!-- Blog Title Wrapper -->
-<div class="container title-wrapper">
-    <h1>{{title}}</h1>
-</div>
-
 <section>
     <div class="container">
         <article>
             <time datetime="{{createdAt}}">{{createdAt}}</time>
             <p>{{body}}</p>
         </article>
+
+        <!-- Edit Link -->
+        {{#if slug}}
+            <div class="actions">
+                <a href="/entry/{{slug}}/edit" class="button button-secondary">Edit Entry</a>
+            </div>
+        {{/if}}
 
         <!-- Comments Section -->
         <div class="comments">
@@ -55,7 +56,6 @@
         </div>
     </div>
 </section>
-
 <footer>
     <div>
         <a href="#">Contact Us</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
@@ -64,4 +64,5 @@
 </footer>
 </body>
 </html>
+
 
