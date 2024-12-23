@@ -104,6 +104,17 @@ public class Main {
 
         // Route to display the Edit Blog Entry page
         get("/entry/:slug/edit", (req, res) -> {
+            String correctPassword = "mySecretPassword";
+            String passwordCookie = req.cookie("password");
+
+            // Check if the password matches
+            if (!correctPassword.equals(passwordCookie)) {
+                req.session().attribute("redirectUrl", "/entry/" + req.params(":slug") + "/edit");
+                res.redirect("/password"); // Redirect to the password page
+                return null;
+            }
+
+            // Proceed with fetching the blog entry if the password is correct
             String slug = req.params(":slug");
             System.out.println("Slug received: " + slug);  // Debugging: Verify slug
 
@@ -122,6 +133,7 @@ public class Main {
                 return new ModelAndView(errorModel, "error.hbs"); // Error template
             }
         }, engine);
+
 
         // Route to handle the Edit form submission
         post("/entry/:slug/edit", (req, res) -> {

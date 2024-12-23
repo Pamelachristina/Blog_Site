@@ -18,7 +18,7 @@ public class InMemoryBlogDao implements BlogDao {
 
         // Generate slugs for the entries
         for (BlogEntry entry : blogEntries) {
-            entry.setSlug(entry.getTitle().toLowerCase().replace(" ", "-"));
+            entry.setSlug(entry.getTitle().toLowerCase().replace(" ", "-").replaceAll("[^a-z0-9-]", ""));
         }
     }
 
